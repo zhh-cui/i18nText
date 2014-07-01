@@ -24,6 +24,7 @@ class i18nText {
   private:
     void putWChar(cv::Mat &img, wchar_t wc, cv::Point &pos, cv::Scalar color);
 
+    bool valid;
     FT_Library library;
     FT_Face face;
     cv::Scalar size;

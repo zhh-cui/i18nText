@@ -8,6 +8,7 @@
 #include "../include/i18nText.h"
 
 i18nText::i18nText() {
+    valid = false;
     size.val[0] = 25;
     size.val[1] = 0.5;
     size.val[2] = 0.1;
@@ -15,8 +16,10 @@ i18nText::i18nText() {
 }
 
 i18nText::~i18nText() {
-    FT_Done_Face(face);
-    FT_Done_FreeType(library);
+    if (valid) {
+        FT_Done_Face(face);
+        FT_Done_FreeType(library);
+    }
 }
 
 bool i18nText::setFont(const char *name) {
@@ -27,6 +30,7 @@ bool i18nText::setFont(const char *name) {
             return false;
     }
     FT_Set_Pixel_Sizes(face, (int)this->size.val[0], 0);
+    valid = true;
     return true;
 }
 
