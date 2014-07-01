@@ -1,0 +1,8 @@
+Todo List
+=========
+
+ - Add rectangle around characters.
+ - Add underline support.
+ - Add strickout support.
+ - Add transparency support.
+ - Origin of string is at the bottom-left/bottom-right/top-left/top-right support.
