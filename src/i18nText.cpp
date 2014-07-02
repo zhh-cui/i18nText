@@ -11,9 +11,9 @@ int i18nText::counter = 0;
 FT_Library i18nText::library;
 
 i18nText::i18nText() {
-    size.val[0] = 25;
-    size.val[1] = 0.5;
-    size.val[2] = 0.1;
+    size.pixelSize = 25;
+    size.space = 0.5;
+    size.gap = 0.1;
     ++counter;
     valid = false;
 }
@@ -44,16 +44,17 @@ bool i18nText::setFont(const char *name) {
             return false;
         }
     }
-    FT_Set_Pixel_Sizes(face, (int)this->size.val[0], 0);
+    FT_Set_Pixel_Sizes(face, (int)this->size.pixelSize, 0);
     valid = true;
     return true;
 }
 
-void i18nText::setSize(cv::Scalar *size) {
+void i18nText::setSize(SizeDesc *size) {
     if (size) {
-        this->size.val[0] = fabs(size->val[0]);
-        this->size.val[1] = fabs(size->val[1]);
-        this->size.val[2] = fabs(size->val[2]);
+        this->size.pixelSize = fabs(size->pixelSize);
+        this->size.space = fabs(size->space);
+        this->size.gap = fabs(size->gap);
+        FT_Set_Pixel_Sizes(face, (int)this->size.pixelSize, 0);
     }
 }
 
@@ -101,9 +102,9 @@ void i18nText::putWChar(cv::Mat &img, wchar_t wc, cv::Point &pos, cv::Scalar col
         }
     }
 
-    double space = size.val[0] * size.val[1];
-    double sep = size.val[0] * size.val[2];
+    double space = size.pixelSize * size.space;
+    double gap = size.pixelSize * size.gap;
 
-    pos.x += (int)((cols ? cols : space) + sep);
+    pos.x += (int)((cols ? cols : space) + gap);
 }
 
