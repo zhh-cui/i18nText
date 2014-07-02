@@ -7,27 +7,42 @@
 
 #include "../include/i18nText.h"
 
+int i18nText::counter = 0;
+FT_Library i18nText::library;
+
 i18nText::i18nText() {
-    valid = false;
     size.val[0] = 25;
     size.val[1] = 0.5;
     size.val[2] = 0.1;
-
+    ++counter;
+    valid = false;
 }
 
 i18nText::~i18nText() {
     if (valid) {
         FT_Done_Face(face);
+        valid = false;
+    }
+    --counter;
+    if (!counter) {
         FT_Done_FreeType(library);
     }
 }
 
+bool i18nText::isValid(void) {
+    return valid;
+}
+
 bool i18nText::setFont(const char *name) {
+    if (1 == counter) {
+        if (FT_Init_FreeType(&library)) {
+            return false;
+        }
+    }
     if (name) {
-        if (FT_Init_FreeType(&library))
+        if (FT_New_Face(library, name, 0, &face)) {
             return false;
-        if (FT_New_Face(library, name, 0, &face))
-            return false;
+        }
     }
     FT_Set_Pixel_Sizes(face, (int)this->size.val[0], 0);
     valid = true;

@@ -18,14 +18,16 @@ class i18nText {
   public:
     i18nText();
     ~i18nText();
+    bool isValid(void);
     bool setFont(const char *name);
     void setSize(cv::Scalar *size = NULL);
     int putText(cv::Mat &img, const wchar_t *text, cv::Point pos, cv::Scalar color = CV_RGB(0, 0, 0));
   private:
     void putWChar(cv::Mat &img, wchar_t wc, cv::Point &pos, cv::Scalar color);
 
+    static int counter;
+    static FT_Library library;
     bool valid;
-    FT_Library library;
     FT_Face face;
     cv::Scalar size;
 };
