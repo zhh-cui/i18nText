@@ -17,6 +17,8 @@ int main(int argc, char **argv) {
           std::cout << "Put another ";
           num = i18n.putText(test, msg2, cv::Point(25, 100), CV_RGB(255, 0, 0));
           std::cout << num << " chars." << std::endl;
+          imshow("text", test);
+          cvWaitKey(0);
         }
     } catch (cv::Exception e) {
         std::cout << e.what() << std::endl;
