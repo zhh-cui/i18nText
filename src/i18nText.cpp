@@ -85,7 +85,7 @@ void i18nText::putWChar(cv::Mat &img, wchar_t wc, cv::Point &pos, cv::Scalar col
         for (int j = 0; j < cols; ++j) {
             int off  = ((0 == 0) ? i : (rows - 1 - i)) * slot->bitmap.pitch + j / 8;
             if (slot->bitmap.buffer[off] & (0xC0 >> (j % 8))) {
-                int r = (0 == 0) ? pos.y - (rows - 1 - i) : pos.y + i;
+                int r = (0 == 0) ? pos.y - (slot->bitmap_top - i) : pos.y + i;
                 ;
                 int c = pos.x + j;
 
